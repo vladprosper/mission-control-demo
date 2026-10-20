@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mission Control · One article, one review</title>
+  <link rel="stylesheet" href="/static/story.css">
+  <script src="/static/story.js" defer></script>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="/" aria-label="Mission Control home"><span class="brand-icon">m<span>c</span></span><span>Mission Control<small>A place to resume useful work</small></span></a>
+    <div class="top-actions"><span class="demo-tag">FICTIONAL DATA · INTERACTIVE DEMO</span><button class="text-button" id="architecture-open">How it works <span aria-hidden="true">↗</span></button></div>
+  </header>
+  <div class="workspace">
+    <aside class="sidebar" aria-label="The article and its recurring review">
+      <div class="side-label">THE THREAD WE'RE FOLLOWING</div>
+      <section class="article-card"><span class="small-icon" aria-hidden="true">▤</span><div class="eyebrow">PERSONAL RESEARCH · ARTICLE</div><h1>When AI agents negotiate a purchase</h1><p class="project">The Sovereign AI Enterprise</p><div class="article-state"><span id="article-status">Paused draft</span><b id="draft-version">v3</b></div></section>
+      <div class="thread-line" aria-hidden="true"><span>↓</span> connected to</div>
+      <section class="routine-card"><div class="eyebrow">↻ THE SAME RECURRING REVIEW</div><h2>Purchasing-agent research review</h2><div class="routine-meta"><span>Weekly</span><span class="status-dot">Scheduled</span></div><div class="next-run"><small>Next review in this story</small><strong id="next-run">12 September · 09:00</strong></div></section>
+      <nav class="article-links" aria-label="Return to this article"><div class="article-links-label">RETURN TO THIS ARTICLE <span>DEMO TARGETS</span></div><button id="open-manuscript">Open manuscript ↗</button><button id="open-record">Open Notion record ↗</button><button id="open-conversation">Continue conversation ↗</button></nav>
+    </aside>
+    <main id="main" tabindex="-1">
+      <nav class="progress" aria-label="Story progress" id="progress"></nav>
+      <div class="scene-header"><div class="scene-meta"><span id="scene-number">01 / 07</span><span id="scene-date">8 September</span></div><h2 id="scene-title">An article I can return to.</h2></div>
+      <div id="scene" aria-live="polite"><div class="loading">Loading your fictional article…</div></div>
+      <div class="presenter"><details><summary>Presenter notes <span id="timing">0:00–0:25</span></summary><p id="narration"></p></details></div>
+      <div class="action-bar"><div><span class="step-label" id="next-label">NEXT IN THE STORY</span><p id="action-hint">Follow this article through its scheduled review.</p></div><button class="primary" id="advance" disabled>Loading…</button></div>
+      <div class="error" id="error" role="alert" hidden></div>
+      <footer><span>Illustrative timeline · local mock records · nothing runs or publishes externally</span><button id="restart" class="text-button">Restart story</button></footer>
+    </main>
+  </div>
+  <dialog id="article-target" aria-labelledby="target-title"><div class="dialog-header"><div><div class="eyebrow">THIS ARTICLE · LOCAL DEMO TARGET</div><h2 id="target-title"></h2></div><button id="target-close" class="close" aria-label="Close article target">×</button></div><p class="target-article">When AI agents negotiate a purchase</p><div id="target-content"></div></dialog>
+  <dialog id="architecture" aria-labelledby="architecture-title">
+    <div class="dialog-header"><div><div class="eyebrow">THE ARCHITECTURE BEHIND THE STORY</div><h2 id="architecture-title">Agents do the work. You make the judgment.</h2></div><button id="architecture-close" class="close" aria-label="Close architecture">×</button></div>
+    <p class="dialog-intro">The recurring schedule is an instruction that starts a review. It is not another agent. The article, finding, decision and next action stay linked.</p>
+    <div class="architecture-flow" aria-label="Schedule starts review agent. Owner reviews finding. Agents write research record and manuscript. Local importer reads permitted reporting records into SQLite and dashboard.">
+      <div class="arch-node"><small>1 · WHEN TO WORK</small><strong>Weekly instruction</strong><p>Check public material against the article’s open question.</p></div><div class="arrow">→</div>
+      <div class="arch-node"><small>2 · DO THE REVIEW</small><strong>Review agent</strong><p>Read available sources. Link a finding. Preserve gaps.</p></div><div class="arrow">→</div>
+      <div class="arch-node owner"><small>3 · MAKE THE JUDGMENT</small><strong>You</strong><p>Assess the evidence and decide what changes.</p></div>
+    </div>
+    <div class="flow-label">↓ An agent records your decision and revises the draft</div>
+    <div class="architecture-flow lower">
+      <div class="arch-node"><small>WORKING CONTEXT</small><strong>Notion + manuscript files</strong><p>Research record owns context and next action. The manuscript owns wording.</p></div><div class="arrow">→</div>
+      <div class="arch-node"><small>REPORTING PATH</small><strong>Python importer → SQLite</strong><p>Read permitted reporting records, validate them and store a local snapshot.</p></div><div class="arrow">→</div>
+      <div class="arch-node"><small>WHERE YOU RESUME</small><strong>Mission Control</strong><p>See what changed, what needs your review and what happens next.</p></div>
+    </div>
+    <div class="architecture-note"><strong>What this demo actually implements</strong><p>Python serves this interface and validates each story transition. SQLite holds the fictional story snapshots. Agent actions, Notion, manuscript changes, scheduled runs and platform observations are simulated. The separate technical lab runs the real JSON/CSV importer on synthetic fixtures.</p><p>The importer reports on records; it does not write back to Notion. No actual source is fetched and no AI model is called.</p></div>
+    <a class="technical-link" href="/technical/#architecture">Open the optional technical lab →</a>
+  </dialog>
+</body>
+</html>

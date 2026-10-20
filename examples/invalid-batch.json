@@ -1,0 +1,32 @@
+[
+  {
+    "source": "mock_notion",
+    "external_id": "ROLLBACK-NEW",
+    "title": "Agent review boundaries",
+    "workstream": "AI governance",
+    "status": "planned",
+    "source_date": "2026-10-18T09:00:00Z",
+    "source_updated_at": "2026-10-19T10:00:00Z",
+    "scheduled_for": null,
+    "submitted_at": null,
+    "verified_at": null,
+    "evidence_url": null,
+    "metric_value": null,
+    "metric_unit": null
+  },
+  {
+    "source": "mock_notion",
+    "external_id": "N-02",
+    "title": "Synthetic evaluation notes",
+    "workstream": "AI governance",
+    "status": "published",
+    "source_date": "2026-10-17T09:00:00Z",
+    "source_updated_at": "2026-10-19T10:00:00Z",
+    "scheduled_for": null,
+    "submitted_at": null,
+    "verified_at": null,
+    "evidence_url": null,
+    "metric_value": 3,
+    "metric_unit": "items"
+  }
+]

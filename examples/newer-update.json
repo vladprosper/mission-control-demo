@@ -1,0 +1,17 @@
+[
+  {
+    "source": "mock_notion",
+    "external_id": "N-01",
+    "title": "Agent review boundaries",
+    "workstream": "AI governance",
+    "status": "drafted",
+    "source_date": "2026-10-18T09:00:00Z",
+    "source_updated_at": "2026-10-19T11:00:00Z",
+    "scheduled_for": null,
+    "submitted_at": null,
+    "verified_at": null,
+    "evidence_url": null,
+    "metric_value": null,
+    "metric_unit": null
+  }
+]

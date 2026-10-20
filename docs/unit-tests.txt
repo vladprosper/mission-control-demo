@@ -1,0 +1,57 @@
+test_conflicting_duplicates_reject_entire_batch (test_store.StoreTests.test_conflicting_duplicates_reject_entire_batch) ... ok
+test_csv_json_equivalence (test_store.StoreTests.test_csv_json_equivalence) ... ok
+test_csv_malformed_and_nonfinite (test_store.StoreTests.test_csv_malformed_and_nonfinite) ... ok
+test_database_failure_rolls_back_prior_insert (test_store.StoreTests.test_database_failure_rolls_back_prior_insert) ... ok
+test_empty_report (test_store.StoreTests.test_empty_report) ... ok
+test_equal_timestamp_change_rejected (test_store.StoreTests.test_equal_timestamp_change_rejected) ... ok
+test_exact_duplicates_within_batch (test_store.StoreTests.test_exact_duplicates_within_batch) ... ok
+test_fixture_import_counts (test_store.StoreTests.test_fixture_import_counts) ... ok
+test_freshness_boundary (test_store.StoreTests.test_freshness_boundary) ... ok
+test_historical_time_not_misrepresented (test_store.StoreTests.test_historical_time_not_misrepresented) ... ok
+test_invalid_second_row_atomic (test_store.StoreTests.test_invalid_second_row_atomic) ... ok
+test_missing_is_not_zero (test_store.StoreTests.test_missing_is_not_zero) ... ok
+test_newer_update (test_store.StoreTests.test_newer_update) ... ok
+test_reimport_idempotent_records (test_store.StoreTests.test_reimport_idempotent_records) ... ok
+test_reject_empty_or_wrong_batches (test_store.StoreTests.test_reject_empty_or_wrong_batches) ... ok
+test_reject_invalid_fields_and_dates (test_store.StoreTests.test_reject_invalid_fields_and_dates) ... ok
+test_reject_invalid_metrics (test_store.StoreTests.test_reject_invalid_metrics) ... ok
+test_source_scoped_identity (test_store.StoreTests.test_source_scoped_identity) ... ok
+test_sql_looking_text_is_literal (test_store.StoreTests.test_sql_looking_text_is_literal) ... ok
+test_stale_update_rolls_back_prior_insert (test_store.StoreTests.test_stale_update_rolls_back_prior_insert) ... ok
+test_status_evidence_requirements (test_store.StoreTests.test_status_evidence_requirements) ... ok
+test_timestamp_normalization (test_store.StoreTests.test_timestamp_normalization) ... ok
+test_unknown_date_stays_unknown_after_import (test_store.StoreTests.test_unknown_date_stays_unknown_after_import) ... ok
+test_completed_run_preserves_gap_and_requires_owner_review (test_story.StoryTests.test_completed_run_preserves_gap_and_requires_owner_review) ... ok
+test_failed_snapshot_insert_is_atomic (test_story.StoryTests.test_failed_snapshot_insert_is_atomic) ... ok
+test_later_results_have_separate_definitions_and_unknown_attribution (test_story.StoryTests.test_later_results_have_separate_definitions_and_unknown_attribution) ... ok
+test_one_article_and_review_through_all_six_clicks (test_story.StoryTests.test_one_article_and_review_through_all_six_clicks) ... ok
+test_opening_finding_does_not_accept_it (test_story.StoryTests.test_opening_finding_does_not_accept_it) ... ok
+test_owner_decision_links_evidence_and_revises_draft (test_story.StoryTests.test_owner_decision_links_evidence_and_revises_draft) ... ok
+test_reader_question_returns_to_same_schedule_with_answer_unknown (test_story.StoryTests.test_reader_question_returns_to_same_schedule_with_answer_unknown) ... ok
+test_reset_restores_initial_state_without_reusing_revision (test_story.StoryTests.test_reset_restores_initial_state_without_reusing_revision) ... ok
+test_scheduled_instruction_is_not_a_run (test_story.StoryTests.test_scheduled_instruction_is_not_a_run) ... ok
+test_skipped_steps_and_stale_revisions_do_not_change_state (test_story.StoryTests.test_skipped_steps_and_stale_revisions_do_not_change_state) ... ok
+test_two_tabs_cannot_apply_the_same_revision_twice (test_story.StoryTests.test_two_tabs_cannot_apply_the_same_revision_twice) ... ok
+test_validator_rejects_broken_provenance_and_missing_measurement_dates (test_story.StoryTests.test_validator_rejects_broken_provenance_and_missing_measurement_dates) ... ok
+test_confidential_item_releases_only_approved_metadata (test_workbench.PolicyAndLineageTests.test_confidential_item_releases_only_approved_metadata) ... ok
+test_destination_identity_controls_attribution (test_workbench.PolicyAndLineageTests.test_destination_identity_controls_attribution) ... ok
+test_exclusion_releases_no_existence_marker (test_workbench.PolicyAndLineageTests.test_exclusion_releases_no_existence_marker) ... ok
+test_no_source_text_released_by_any_fixture (test_workbench.PolicyAndLineageTests.test_no_source_text_released_by_any_fixture) ... ok
+test_public_sensitivity_does_not_override_ownership (test_workbench.PolicyAndLineageTests.test_public_sensitivity_does_not_override_ownership) ... ok
+test_apply_does_not_modify_baseline_source (test_workbench.WorkbenchTests.test_apply_does_not_modify_baseline_source) ... ok
+test_apply_requires_preview_and_cannot_replay_token (test_workbench.WorkbenchTests.test_apply_requires_preview_and_cannot_replay_token) ... ok
+test_duplicate_replay_retains_record_dates (test_workbench.WorkbenchTests.test_duplicate_replay_retains_record_dates) ... ok
+test_history_distinguishes_attempts (test_workbench.WorkbenchTests.test_history_distinguishes_attempts) ... ok
+test_invalid_packet_never_starts_transaction (test_workbench.WorkbenchTests.test_invalid_packet_never_starts_transaction) ... ok
+test_preview_cannot_be_applied_to_different_scenario (test_workbench.WorkbenchTests.test_preview_cannot_be_applied_to_different_scenario) ... ok
+test_preview_changes_trial_only (test_workbench.WorkbenchTests.test_preview_changes_trial_only) ... ok
+test_refresh_resolves_stale_and_keeps_zero (test_workbench.WorkbenchTests.test_refresh_resolves_stale_and_keeps_zero) ... ok
+test_reset_invalidates_preview (test_workbench.WorkbenchTests.test_reset_invalidates_preview) ... ok
+test_reset_restores_baseline (test_workbench.WorkbenchTests.test_reset_restores_baseline) ... ok
+test_rollback_trace_records_staged_insert_but_no_surviving_data (test_workbench.WorkbenchTests.test_rollback_trace_records_staged_insert_but_no_surviving_data) ... ok
+test_unknown_scenario_rejected (test_workbench.WorkbenchTests.test_unknown_scenario_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 52 tests in 0.099s
+
+OK

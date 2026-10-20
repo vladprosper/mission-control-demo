@@ -1,0 +1,13 @@
+source,external_id,title,workstream,status,source_date,source_updated_at,scheduled_for,submitted_at,verified_at,evidence_url,metric_value,metric_unit
+mock_notion,N-01,Agent review boundaries,AI governance,planned,2026-10-18T09:00:00Z,2026-10-19T10:00:00Z,,,,,,
+mock_notion,N-02,Synthetic evaluation notes,AI governance,drafted,2026-10-17T09:00:00Z,2026-10-19T10:00:00Z,,,,,3,items
+mock_notion,N-03,Data readiness workshop,AI enablement,scheduled,2026-10-16T09:00:00Z,2026-10-19T10:00:00Z,2026-10-22T14:00:00Z,,,,2,hours
+mock_notion,N-04,Model access decision brief,Sovereignty research,submitted,2026-10-08T09:00:00Z,2026-10-19T10:00:00Z,,2026-10-19T08:00:00Z,,,,
+mock_metricool,M-01,Fictional field note 01,Research publishing,verified,2026-10-18T09:00:00Z,2026-10-19T10:00:00Z,,2026-10-19T08:00:00Z,2026-10-19T09:00:00Z,https://example.invalid/evidence/M-01,1240,views
+mock_metricool,M-02,Fictional field note 02,Research publishing,scheduled,2026-10-19T09:00:00Z,2026-10-19T10:00:00Z,2026-10-22T14:00:00Z,,,,,
+mock_metricool,M-03,Fictional field note 03,Research publishing,drafted,,2026-10-19T10:00:00Z,,,,,,
+mock_metricool,M-04,Fictional field note 04,Research publishing,submitted,2026-10-09T09:00:00Z,2026-10-19T10:00:00Z,,2026-10-19T08:00:00Z,,,0,views
+mock_manual,L-01,Capability map sketch,Sovereignty research,planned,2026-10-18T09:00:00Z,2026-10-19T10:00:00Z,,,,,,
+mock_manual,L-02,Local import walkthrough,AI enablement,verified,2026-10-19T08:00:00Z,2026-10-19T10:00:00Z,,2026-10-19T08:00:00Z,2026-10-19T09:00:00Z,https://example.invalid/evidence/L-02,4,items
+mock_manual,L-03,Dataset review checklist,AI governance,drafted,,2026-10-19T10:00:00Z,,,,,,
+mock_manual,L-04,Fictional session recap,AI enablement,verified,2026-10-07T09:00:00Z,2026-10-19T10:00:00Z,,2026-10-19T08:00:00Z,2026-10-19T09:00:00Z,https://example.invalid/evidence/L-04,1.5,hours
