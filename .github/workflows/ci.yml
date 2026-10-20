@@ -1,0 +1,47 @@
+name: Tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: tests-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    name: Python ${{ matrix.python }} / ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        python: ['3.11', '3.12', '3.13', '3.14']
+    steps:
+      - name: Check out source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Set up Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: ${{ matrix.python }}
+      - name: Show runtime and check SQLite JSON support
+        shell: python
+        run: |
+          import sys
+          import sqlite3
+          print(sys.version)
+          print("SQLite", sqlite3.sqlite_version)
+          with sqlite3.connect(":memory:") as db:
+              assert db.execute("SELECT json_valid('{}')").fetchone()[0] == 1
+      - name: Run unit and documented CLI contract tests
+        run: python -m unittest discover -s tests -v
+      - name: Run CLI and loopback HTTP smoke checks
+        run: python scripts/smoke_test.py
