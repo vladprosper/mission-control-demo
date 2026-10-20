@@ -133,4 +133,4 @@ This is a small local utility with a narrow snapshot contract, not a general ETL
 
 Vladimir Stojanovski · [The Sovereign AI](https://thesovereignai.substack.com) · [LinkedIn](https://www.linkedin.com/in/vlads/).
 
-Prepared with AI assistance and executable checks. Published files and examples contain no operational data. No open-source license has been selected; [NOTICE.md](NOTICE.md) describes the current publication terms. Technical reusability is not a license grant.
+Prepared with AI assistance and executable checks. Published files and examples contain no operational data. The code and associated documentation are available under the [MIT License](LICENSE), copyright 2026 Vladimir Stojanovski. See [NOTICE.md](NOTICE.md) for the scope of this publication and separately linked presentation materials.
