@@ -1,6 +1,6 @@
 # Release verification
 
-Run on 20 October 2026 with Python 3.14.0 and SQLite on macOS. The original 64-test suite and smoke commands passed all 12 hosted jobs (Python 3.11–3.14 × Ubuntu/macOS/Windows) in [run 39415764459](https://github.com/vladprosper/mission-control-demo/actions/runs/39415764459), commit `9edf551`. The [current workflow](https://github.com/vladprosper/mission-control-demo/actions/workflows/ci.yml) records results for subsequent commits.
+Run on 20 October 2026 with Python 3.14.0 and SQLite on macOS. The corrected 65-test suite and smoke commands passed all 12 hosted jobs (Python 3.11–3.14 × Ubuntu/macOS/Windows) in [run 39416440036](https://github.com/vladprosper/mission-control-demo/actions/runs/39416440036), commit `914e9c0`. The [current workflow](https://github.com/vladprosper/mission-control-demo/actions/workflows/ci.yml) records results for subsequent commits.
 
 ## Automated results
 
@@ -13,7 +13,15 @@ The smoke test exercises CLI imports, invalid-batch rollback, HTTP assets/report
 
 Additional reusable-core tests cover arbitrary source namespaces, units and HTTPS evidence references, SQL view queries, schema version and shape rejection without mutation, caller transaction preservation, custom freshness thresholds, input-only validation, read-only reports, the complete documented fresh-DB workflow and export/reimport equivalence.
 
-The added CLI regression rejects JSON `null`, duplicate JSON fields, unterminated CSV fields/headers, out-of-range metrics and UTC-overflow timestamps. Each case exits 2 without a traceback or a newly created database. The documented stale-replay command was executed and preserved database bytes. The final local smoke rerun was interrupted by loss of the Mac connection; its result is unconfirmed. Hosted CI runs both commands for each commit.
+The added CLI regression rejects JSON `null`, duplicate JSON fields, unterminated CSV fields/headers, out-of-range metrics and UTC-overflow timestamps. Each case exits 2 without a traceback or a newly created database. The documented stale-replay command was executed and preserved database bytes. A fresh clone of published commit `914e9c0` was revalidated on 20 October after the Mac reconnected: all 65 tests and all three smoke groups passed (ephemeral ports 49819 and 49835). Hosted CI runs both commands for each commit.
+
+## Executed documentation examples
+
+The README quickstart was run in that fresh clone with new database paths. Validation accepted two records; JSON inserted two; CSV skipped two duplicates; the newer snapshot updated one. The report showed one scheduled and one verified record, one stale observation and one missing metric. Export produced two normalized records and reimport into another new database inserted both.
+
+The README Python API block was executed verbatim. Its 14-day threshold reported zero stale observations and one missing metric; the SQL view distinguished `null` from observed zero. Both the invalid-batch example and the guide's stale-replay example exited 2 and preserved database bytes.
+
+This validates the supplied examples and tested environments. It does not establish throughput at scale, arbitrary third-party export compatibility, or future runner-image behavior.
 
 ## Scope
 
