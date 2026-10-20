@@ -104,6 +104,14 @@ Open the printed loopback URL on the same computer; keep the terminal open and s
 
 [Walkthrough GIF](https://github.com/vladprosper/vladprosper/blob/main/mission-control-walkthrough.gif) · [Presenter script](docs/DEMO_GUIDE.md) · [Architecture](docs/ARCHITECTURE.md) · [Mock article actions](docs/ARTICLE_ACTIONS.md).
 
+### Inspect an import before applying it
+
+The technical workbench previews an import on a temporary SQLite copy, shows the transaction trace and field changes, then requires an accepted preview before applying to its disposable sandbox. For example, a newer draft changes `planned` to `drafted`; a conflicting older snapshot rejects the entire transaction.
+
+[![Fictional workbench preview showing transaction steps and field changes before Apply](docs/images/workbench-preview.jpg)](docs/WORKBENCH.md)
+
+*Existing technical-lab screenshot; all data is fictional. [Read the preview-to-apply explanation and open the full-size image](docs/WORKBENCH.md). The source database is unchanged.*
+
 ## Tests and documentation
 
 ```sh
