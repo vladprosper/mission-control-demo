@@ -1,0 +1,17 @@
+[
+  {
+    "source": "editorial_tracker",
+    "external_id": "ART-101",
+    "title": "Synthetic guide to procurement approvals",
+    "workstream": "Research",
+    "status": "scheduled",
+    "source_date": "2026-10-18T09:00:00Z",
+    "source_updated_at": "2026-10-19T11:00:00Z",
+    "scheduled_for": "2026-10-21T09:00:00Z",
+    "submitted_at": null,
+    "verified_at": null,
+    "evidence_url": null,
+    "metric_value": null,
+    "metric_unit": null
+  }
+]

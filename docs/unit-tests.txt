@@ -1,3 +1,15 @@
+test_custom_freshness_threshold (test_importer_api.ImporterAPITests.test_custom_freshness_threshold) ... ok
+test_file_validation_has_no_database_side_effect (test_importer_api.ImporterAPITests.test_file_validation_has_no_database_side_effect) ... ok
+test_json_csv_round_trip_keeps_source_dates_and_zero (test_importer_api.ImporterAPITests.test_json_csv_round_trip_keeps_source_dates_and_zero) ... ok
+test_nested_import_does_not_commit_callers_work (test_importer_api.ImporterAPITests.test_nested_import_does_not_commit_callers_work) ... ok
+test_non_mock_sources_units_and_https_evidence (test_importer_api.ImporterAPITests.test_non_mock_sources_units_and_https_evidence) ... ok
+test_reinitialize_does_not_relabel_user_database_as_fictional (test_importer_api.ImporterAPITests.test_reinitialize_does_not_relabel_user_database_as_fictional) ... ok
+test_reject_unsafe_or_malformed_evidence_urls (test_importer_api.ImporterAPITests.test_reject_unsafe_or_malformed_evidence_urls) ... ok
+test_schema_view_is_directly_queryable (test_importer_api.ImporterAPITests.test_schema_view_is_directly_queryable) ... ok
+test_unknown_schema_refused_without_mutation (test_importer_api.ImporterAPITests.test_unknown_schema_refused_without_mutation) ... ok
+test_unversioned_existing_database_is_not_adopted (test_importer_api.ImporterAPITests.test_unversioned_existing_database_is_not_adopted) ... ok
+test_wrong_shape_version_one_refused (test_importer_api.ImporterAPITests.test_wrong_shape_version_one_refused) ... ok
+test_documented_clean_workflow_and_export_round_trip (test_importer_api.ImporterCLITests.test_documented_clean_workflow_and_export_round_trip) ... ok
 test_conflicting_duplicates_reject_entire_batch (test_store.StoreTests.test_conflicting_duplicates_reject_entire_batch) ... ok
 test_csv_json_equivalence (test_store.StoreTests.test_csv_json_equivalence) ... ok
 test_csv_malformed_and_nonfinite (test_store.StoreTests.test_csv_malformed_and_nonfinite) ... ok
@@ -52,6 +64,6 @@ test_rollback_trace_records_staged_insert_but_no_surviving_data (test_workbench.
 test_unknown_scenario_rejected (test_workbench.WorkbenchTests.test_unknown_scenario_rejected) ... ok
 
 ----------------------------------------------------------------------
-Ran 52 tests in 0.099s
+Ran 64 tests in 1.297s
 
 OK

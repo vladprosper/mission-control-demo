@@ -4,6 +4,8 @@
 
 Python serves local assets and JSON over IPv4 loopback. SQLite transactions enforce atomic imported batches. Story actions validate relationships and revisions before committing in-memory snapshots. Tests inject failed writes and stale or conflicting updates.
 
+The CLI/Python importer now accepts user-defined source namespaces and units; it is independently usable on files conforming to the contract. Its report does not automatically label user-supplied records fictional. The browser demonstration remains fixture-only.
+
 ## Scripted behavior
 
 Research, source reading, agent actions, editorial decisions, document changes, Notion records, schedules, publication and results are fictional fixtures. No model, external API, SDK, account or credential is used. `mock_notion` and `mock_metricool` are labels for local example records. A scheduled instruction does not run a job; a completed scripted run does not prove complete evidence.
@@ -16,7 +18,7 @@ Identity is exact `(source, external_id)`, not semantic matching. Deduplication 
 
 ## Deployment limits
 
-This is a local development server. It has no user authentication, role-based authorization, TLS, encryption service, backups, durable scheduler, production monitoring or load testing. Same-origin checks, bounded JSON and parameterized SQL do not establish production readiness. Do not expose it on a network or enter real sensitive data.
+This is a local development server. It has no user authentication, role-based authorization, TLS, encryption service, backups, durable scheduler, production monitoring or load testing. Same-origin checks, bounded JSON and parameterized SQL do not establish production readiness. Do not expose the demo server on a network or enter real sensitive data in it. For generic importer use, apply your own data-handling requirements and use a dedicated database.
 
 ## Adapting the example
 

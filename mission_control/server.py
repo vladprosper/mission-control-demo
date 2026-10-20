@@ -26,6 +26,10 @@ def make_server(db_path, port=0, as_of=None, workbench=False):
     db_path = Path(db_path).resolve()
     if not db_path.is_file():
         raise ValidationError("Initialize and import a fictional database before serving")
+    with closing(sqlite3.connect(db_path.as_uri() + "?mode=ro", uri=True)) as source:
+        marker = source.execute("SELECT value FROM demo_metadata WHERE key='dataset'").fetchone()
+        if not marker or marker[0] != "FICTIONAL DEMO ONLY":
+            raise ValidationError("Demo server accepts fictional databases only; use CLI report for your own records")
     lab = None
     story = Story()
     if workbench:

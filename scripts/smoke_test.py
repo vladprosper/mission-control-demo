@@ -23,7 +23,7 @@ http = urllib.request.build_opener(urllib.request.ProxyHandler({}))
 def main():
     with tempfile.TemporaryDirectory(prefix="mission-control-smoke-") as tmp:
         db = str(Path(tmp) / "fictional.sqlite3")
-        command = [sys.executable, "-m", "mission_control", "--db", db, "--as-of", AS_OF]
+        command = [sys.executable, "-m", "mission_control", "--db", db, "--fictional", "--as-of", AS_OF]
         def run(*args, success=True):
             result = subprocess.run(command + list(args), cwd=ROOT, capture_output=True, text=True)
             assert (result.returncode == 0) == success, result.stderr

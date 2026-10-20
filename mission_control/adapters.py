@@ -1,14 +1,14 @@
-"""File-only mock adapters. No network calls, SDKs, tokens, or platform access."""
+"""Bounded local JSON/CSV readers. No network calls or platform integration."""
 import csv
 import json
 from pathlib import Path
 from .store import ValidationError
 
 
-def load_mock_file(path):
+def load_file(path):
     path = Path(path)
     if path.stat().st_size > 5_000_000:
-        raise ValidationError("Mock file exceeds 5 MB limit")
+        raise ValidationError("Input file exceeds 5 MB limit")
     with path.open(encoding="utf-8-sig", newline="") as stream:
         if path.suffix.lower() == ".json":
             return json.load(stream)
@@ -28,4 +28,8 @@ def load_mock_file(path):
                         raise ValidationError("CSV metric must be numeric or blank") from exc
                 rows.append(row)
             return rows
-    raise ValidationError("Mock adapter accepts JSON or CSV only")
+    raise ValidationError("File reader accepts JSON or CSV only")
+
+
+# Compatibility alias for the fictional walkthrough and original examples.
+load_mock_file = load_file

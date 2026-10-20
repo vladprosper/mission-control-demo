@@ -2,7 +2,7 @@
 
 ## Read the code in this order
 
-1. `adapters.py` loads bounded local JSON/CSV examples.
+1. `adapters.py` loads bounded local JSON/CSV files (`load_file`; `load_mock_file` remains a compatibility alias).
 2. `store.py` defines validation, normalization, source identity, transactions and reporting.
 3. `story.py` defines one linked article/review and the allowed six transitions.
 4. `workbench.py` copies the baseline and controls preview/apply/reset.
@@ -10,6 +10,8 @@
 6. `static/story.js` renders the narrative; `app.js` and `experience.js` render the technical lab.
 
 `portfolio.py` contains supplemental fictional technical-lab context. `scripts/review.py` seeds a dedicated local fixture database and starts an interactive foreground server. `python3 -m mission_control` provides import/report commands and a read-only server. There are no third-party runtime dependencies or build steps.
+
+The independently usable entry points, CLI and schema are documented in [IMPORTER.md](IMPORTER.md) and [SCHEMA.md](SCHEMA.md).
 
 ## Storage boundaries
 
@@ -20,7 +22,7 @@
 | Story SQLite connection | Server process | Validated snapshots, revision checks |
 | Workbench SQLite copy | Server process | Preview tokens, applied synthetic scenarios and reset |
 
-Do not substitute a real database for any of these. Output files are ignored by Git.
+Use dedicated versioned databases for the importer. Keep real records out of the fictional browser demonstration; its server checks the creation-time fictional marker. Output files are ignored by Git.
 
 ## HTTP interface
 
@@ -44,7 +46,7 @@ POST requires an exact matching local Host/Origin, `application/json`, a 1–409
 
 ## Extending fixtures
 
-Keep examples fictional and use `https://example.invalid/evidence/` for invented evidence. Follow [DATA_CONTRACT.md](DATA_CONTRACT.md). Add a test for the behavioral guarantee you change: rollback after a late-row conflict, update precedence, null versus zero, source freshness or relationship validation. Avoid tests that merely reproduce UI text.
+Keep examples fictional and use reserved example domains for invented evidence. The generic importer also accepts user-defined namespaces, units and ordinary HTTPS evidence references without fetching them. Follow [DATA_CONTRACT.md](DATA_CONTRACT.md). Add a test for the behavioral guarantee you change: rollback after a late-row conflict, update precedence, null versus zero, source freshness or relationship validation. Avoid tests that merely reproduce UI text.
 
 For story changes, preserve the distinction between schedule, observed run, incomplete finding, owner decision and revised manuscript. Validate cross-record links before committing and maintain revision rejection for concurrent browser tabs. Do not turn “verified” into a claim about a real platform without independent evidence retrieval.
 

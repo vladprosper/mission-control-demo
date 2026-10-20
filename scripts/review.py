@@ -22,7 +22,7 @@ def main():
     output.mkdir(exist_ok=True)
     # Dedicated review data, separate from CLI walkthrough experiments.
     with closing(connect(output / "owner-review.sqlite3")) as db:
-        initialize(db)
+        initialize(db, fictional=True)
         import_records(db, load_mock_file(ROOT / "examples" / "synthetic.json"), REFERENCE_TIME)
     with make_server(output / "owner-review.sqlite3", args.port, REFERENCE_TIME, workbench=True) as server:
         url = f"http://127.0.0.1:{server.server_port}"

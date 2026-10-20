@@ -1,6 +1,8 @@
-# One article, one recurring review
+# Importer core and optional article walkthrough
 
 The main experience follows a fictional article, **“When AI agents negotiate a purchase”**. It illustrates the workflow described in [The Architecture Behind My AI Assisted Work](https://github.com/vladprosper/vladprosper/blob/main/The%20Architecture%20Behind%20My%20AI%20Assisted%20Work.docx). The reference workflow and the code implemented here are deliberately distinguished below.
+
+The reusable `load_file`, `prepare_batch`, `import_records` and `report` functions are independent of the story. They accept normalized local exports into a versioned SQLite schema and queryable SQL view. See [IMPORTER.md](IMPORTER.md) and [SCHEMA.md](SCHEMA.md). The diagrams below distinguish that working core from the scripted workflow.
 
 ## Reference workflow behind the story
 
@@ -64,7 +66,7 @@ flowchart LR
 | --- | --- |
 | `story.py` | Scripted article/review state, relationship validation, revision checks and in-memory SQLite snapshots. |
 | `static/story.*` | Focused narrative interface, presenter notes and optional architecture explanation. |
-| `adapters.py` | Local mock JSON/CSV reading only. |
+| `adapters.py` | Local JSON/CSV reading, with a compatibility alias for mock examples. |
 | `store.py` | Batch validation, normalization, deduplication, atomic imports and report projection. |
 | `portfolio.py` | Separate technical fixtures for release/domain rules and destination attribution. |
 | `workbench.py` | In-memory reporting copy; previews on another copy; current single-use token before apply; reset. |
@@ -73,4 +75,4 @@ flowchart LR
 
 The importer stores normalized row JSON and digest under source/ID identity. Successful import summaries commit with the rows. Source observation dates never become current merely because an import occurred. Unknown values remain unknown, observed zeros remain zeros, and status names do not imply actual external actions. The workbench's previews and writes affect only its sandbox, not the source database or story snapshots.
 
-No component calls Notion, Metricool, an AI model, an employer system or an existing Mission Control database. No encryption, identity enforcement, live integration, backup/restore or production deployment is implemented or claimed.
+The importer accepts HTTPS evidence references but never fetches them. No component calls Notion, Metricool, an AI model, an employer system or an existing Mission Control database. No encryption, identity enforcement, live integration, backup/restore or production deployment is implemented or claimed.

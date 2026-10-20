@@ -1,3 +1,3 @@
-PASS: CLI import, JSON/CSV deduplication, rejected batch rollback, report, HTTP assets/API/404/write rejection; loopback port 63147
-PASS: workbench same-origin/JSON/action guards, preview isolation, real rollback trace, preview/apply token, token replay rejection, reset, unchanged baseline DB; loopback port 63162
-PASS: six-click article/review story, scheduled-vs-run distinction, source gap, owner decision, v3-to-v4, dated separate metrics, same recurring review, exact-origin/JSON/revision guards, reset, unchanged baseline DB; loopback port 63162
+PASS: CLI import, JSON/CSV deduplication, rejected batch rollback, report, HTTP assets/API/404/write rejection; loopback port 63492
+PASS: workbench same-origin/JSON/action guards, preview isolation, real rollback trace, preview/apply token, token replay rejection, reset, unchanged baseline DB; loopback port 63507
+PASS: six-click article/review story, scheduled-vs-run distinction, source gap, owner decision, v3-to-v4, dated separate metrics, same recurring review, exact-origin/JSON/revision guards, reset, unchanged baseline DB; loopback port 63507

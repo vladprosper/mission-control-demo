@@ -1,113 +1,128 @@
-# Mission Control: one article, one recurring review
+# Mission Control: a local snapshot importer, with a workflow demo
 
-A small Python/SQLite demo of AI-assisted work that remains understandable: what was planned, what actually ran, what evidence is missing, what the owner decided, and what happens next.
+Import JSON or CSV exports into SQLite, reject inconsistent batches, skip duplicate records, and report which observations are stale or missing. Use the **CLI or Python API independently of the browser demo**.
 
-**Everything in the demo is fictional.** No AI model runs and no Notion, Metricool, publishing platform or scheduler is connected. The state validation, SQLite transactions and reporting code are real.
+For example, you receive a daily export from an editorial tracker or reporting tool. Normalize it to the documented contract, import it, and query the latest records without double-counting a replay or treating a new import as fresh evidence. The importer does not collect data from those services; you supply the files.
 
-[Watch the narrated walkthrough (3:35)](https://github.com/vladprosper/vladprosper/blob/main/mission-control-walkthrough.gif) · [Architecture](docs/ARCHITECTURE.md) · [Three-minute presenter script](docs/DEMO_GUIDE.md)
+**Standard library only.** Python 3.11+ with SQLite JSON support (normally bundled), no pip packages or account setup. Verified on Python 3.14/macOS; other environments are not yet tested.
 
-![Narrated fictional article walkthrough](https://raw.githubusercontent.com/vladprosper/vladprosper/main/mission-control-walkthrough.gif)
-
-## Run locally
-
-Requires **Python 3.11+**, its standard-library SQLite module, and a modern browser. No third-party Python packages, API keys or account setup.
+## Start with the importer
 
 ```sh
 git clone https://github.com/vladprosper/mission-control-demo.git
 cd mission-control-demo
-python3 scripts/review.py
+python3 -m mission_control --as-of 2026-10-19T12:00:00Z validate examples/importer/records.json
+python3 -m mission_control --db output/tutorial.sqlite3 --as-of 2026-10-19T12:00:00Z import examples/importer/records.json
+python3 -m mission_control --db output/tutorial.sqlite3 --as-of 2026-10-19T12:00:00Z import examples/importer/records.csv
+python3 -m mission_control --db output/tutorial.sqlite3 --as-of 2026-10-19T12:00:00Z import examples/importer/newer.json
+python3 -m mission_control --db output/tutorial.sqlite3 --as-of 2026-10-19T12:00:00Z report
+python3 -m mission_control --db output/tutorial.sqlite3 --as-of 2026-10-19T12:00:00Z export > output/export.json
 ```
 
-Open the exact `http://127.0.0.1:...` URL printed in the terminal. The OS selects a free port; keep the terminal open and press **Ctrl+C** to stop. On Windows, use `py -3` in place of `python3`. Windows and Linux have not been tested for this release.
+Use a new database path for a clean run. Expected results: validation reports 2 unique records without accessing a database; JSON inserts 2; CSV skips 2 duplicates; the newer snapshot updates 1. The report contains 1 scheduled and 1 verified record, 1 stale observation and 1 missing metric. The other metric is an observed **zero clicks**, not missing. Every example record and evidence reference is invented.
 
-The launcher creates only `output/owner-review.sqlite3` and `output/review-session.json` within this checkout. There is no service, login item or scheduled task. The story is in memory and resets when the server stops. All browser tabs on one server share its story state.
-
-## Try the story
-
-Choose **Restart story**, then follow the green button through six clicks:
-
-1. Open the paused article's scheduled research review.
-2. Inspect a completed sample run: three sources read, one unavailable.
-3. Compare the finding with the unchanged draft.
-4. Record the owner's decision and revise draft v3 to v4.
-5. Jump to later fictional publication results, keeping views and impressions separate.
-6. Carry a reader's question into the same recurring review.
-
-**How it works** shows the architecture. **Open manuscript**, **Open Notion record** and **Continue conversation** show local mock targets; none opens or writes real work. See [article actions](docs/ARTICLE_ACTIONS.md).
-
-## Why inspect this code?
-
-The project is useful for learning and discussing concrete implementation patterns:
-
-| Problem | Implementation to inspect |
-| --- | --- |
-| An invalid row must not partially update reporting | Complete-batch validation and atomic transactions in `store.py` |
-| CSV replays must not duplicate JSON imports | Normalized content hashes and `(source, external_id)` identity |
-| An old browser tab must not apply the same decision twice | Revision checks and allowed transitions in `story.py` |
-| A fresh import must not disguise stale evidence | Separate observation, update and import timestamps |
-| Missing data must not look like observed zero | Explicit `null` values and unit-aware reporting |
-| A preview must not mutate the baseline | Copied SQLite sandbox and single-use apply tokens in `workbench.py` |
-
-This is a reference demonstration, not a ready-made agent platform. Review [limitations](docs/LIMITATIONS.md) before adapting it.
-
-## Explore the importer
-
-The optional `/technical/` page contains reporting views and a preview/apply workbench. These fixtures are separate from the article story. The fixed report time is `2026-10-19T12:00:00Z`; it is a reproducible example, not today's data.
-
-Run these commands from the repository root against a new database:
+To see whole-batch rejection, run:
 
 ```sh
-python3 -m mission_control --db output/tutorial.sqlite3 --as-of 2026-10-19T12:00:00Z import examples/synthetic.json
-python3 -m mission_control --db output/tutorial.sqlite3 --as-of 2026-10-19T12:00:00Z import examples/synthetic.csv
-python3 -m mission_control --db output/tutorial.sqlite3 --as-of 2026-10-19T12:00:00Z import examples/invalid-batch.json
-python3 -m mission_control --db output/tutorial.sqlite3 --as-of 2026-10-19T12:00:00Z import examples/newer-update.json
-python3 -m mission_control --db output/tutorial.sqlite3 --as-of 2026-10-19T12:00:00Z report
+python3 -m mission_control --db output/tutorial.sqlite3 --as-of 2026-10-19T12:00:00Z import examples/importer/invalid.json
 ```
 
-Expected: JSON inserts 12 records; CSV skips 12 duplicates; the invalid batch exits **2** and writes nothing; the newer update changes N-01 from planned to drafted. The deliberately failing command is expected—run the next command afterward. For another clean run, use another new database filename throughout.
+It exits **2**, reports the invalid second row on stderr, and leaves records and import summaries unchanged. Successful commands emit JSON on stdout and exit 0. Omit `--as-of` for current UTC time when working with your own exports. On Windows use `py -3` in place of `python3`.
 
-Baseline: 2 planned, 3 drafted, 2 scheduled, 2 submitted, 3 verified; 3 stale observations, 2 unknown source dates and 6 missing metrics. Freshness is ≤7 days; absent dates stay unknown. `scheduled` creates no job, `submitted` proves no delivery, and `verified` means fictional evidence fields passed structural checks. [Full data contract](docs/DATA_CONTRACT.md).
+## Use it from Python
 
-## Architecture and documentation
+Run from the checkout root, or add the checkout to your Python import path:
+
+```python
+from contextlib import closing
+from mission_control import connect, initialize, load_file, import_records, report, timestamp
+
+as_of = timestamp("2026-10-19T12:00:00Z")
+with closing(connect("output/api-example.sqlite3")) as db:
+    initialize(db)
+    counts = import_records(db, load_file("examples/importer/records.json"), as_of)
+    result = report(db, as_of, freshness_days=14)
+    print(counts)
+    print(result["quality"])
+    for row in db.execute("SELECT source, external_id, status, metric_value FROM record_details"):
+        print(dict(row))
+```
+
+There is no package installation or hosted service involved. [API and CLI reference](docs/IMPORTER.md) · [Input contract](docs/DATA_CONTRACT.md) · [SQL schema and version policy](docs/SCHEMA.md).
+
+## What the code guarantees
+
+| Behavior | Implementation |
+| --- | --- |
+| Validate the entire file before writes | Required fields, five statuses, dates, finite metrics, duplicate identities and HTTPS reference format |
+| Commit a batch atomically | Records and successful import summary share one SQLite transaction; late conflicts roll back earlier writes |
+| Replay without replacing unchanged records | Canonical SHA-256 content comparison under `(source, external_id)`; original `imported_at` retained |
+| Accept corrections only when newer | Changed content requires a strictly newer `source_updated_at` |
+| Keep missing values and provenance | `null` stays unknown; zero stays zero; observation, source update and import timestamps remain distinct |
+| Query without parsing JSON yourself | `record_details` SQL view over current normalized records |
+| Refuse unknown database versions | Version and expected column checks; no automatic in-place migration |
+
+Idempotency applies to **record state**, not the entire database: a successful duplicate-only import still adds an import summary. The store keeps latest snapshots, not a complete version history. It never fetches or verifies an evidence URL. A `verified` status means the required fields are consistent, not that an external result was independently checked.
+
+## Input and schema
+
+Your input is a JSON array of records or a CSV with matching field names. A minimal record:
+
+```json
+{
+  "source": "editorial_tracker",
+  "external_id": "ART-101",
+  "title": "Synthetic guide to procurement approvals",
+  "workstream": "Research",
+  "status": "drafted",
+  "source_updated_at": "2026-10-19T09:00:00Z"
+}
+```
+
+Source names are namespaces you choose, not a fixed list of mock connectors. Optional fields include observation dates, intended/submitted/verified timestamps, an HTTPS evidence reference, and a nonnegative numeric metric with its unit. The [contract](docs/DATA_CONTRACT.md) specifies all fields and constraints.
 
 ```mermaid
 flowchart LR
-    Browser[Browser story] --> HTTP[Loopback Python server]
-    HTTP --> Story[Validated story transitions]
-    Story --> Memory[(In-memory SQLite snapshots)]
-    Files[Fictional JSON / CSV] --> Validation[Normalize and validate whole batch]
-    Validation --> DB[(SQLite reporting database)]
-    DB --> Report[Dated report]
-    Report --> Browser
+    Input[Your normalized JSON or CSV] --> Validate[Whole-batch validation]
+    Validate --> Identity[Identity and update precedence]
+    Identity --> Transaction[Atomic SQLite transaction]
+    Transaction --> Records[(Current records and import summaries)]
+    Records --> SQL[SQL view or JSON report/export]
 ```
 
-The two flows are separate: story actions do not import platform data. The technical workbench copies reporting data into its own in-memory sandbox. [Architecture and reference workflow](docs/ARCHITECTURE.md) explains the distinction.
+The [schema.sql](mission_control/schema.sql) file is applied by `initialize()`. [SCHEMA.md](docs/SCHEMA.md) explains keys, JSON storage, the SQL view and upgrading from the original unversioned demo.
 
-- [Developer guide](docs/DEVELOPMENT.md): code map, HTTP contract, extending fixtures and checks.
-- [Data contract](docs/DATA_CONTRACT.md): fields, atomicity, update precedence and provenance.
-- [Demo guide](docs/DEMO_GUIDE.md): click-by-click narration and optional architecture explanation.
-- [Test results](docs/TEST_RESULTS.md): reproducible commands, coverage and limits.
-- [Limitations](docs/LIMITATIONS.md): simulation and deployment boundaries.
+## Optional fictional walkthrough
 
-## Verify
+A separate six-click story illustrates one article and a recurring review. It contains hardcoded research findings, an owner decision, draft revision and later results. **No agents, scheduled runs, Notion/Metricool calls or publishing actions execute.** Story snapshots and the technical workbench are separate in-memory stores.
+
+```sh
+python3 scripts/review.py
+```
+
+Open the printed loopback URL on the same computer; keep the terminal open and stop with Ctrl+C. The OS chooses a free port. The launcher seeds a dedicated fictional database in `output/`. Use **How it works** for architecture and `/technical/` for importer experiments. The demo server rejects databases not explicitly marked fictional; use CLI reports or SQL for your own records.
+
+[Walkthrough GIF](https://github.com/vladprosper/vladprosper/blob/main/mission-control-walkthrough.gif) · [Presenter script](docs/DEMO_GUIDE.md) · [Architecture](docs/ARCHITECTURE.md) · [Mock article actions](docs/ARTICLE_ACTIONS.md).
+
+## Tests and documentation
 
 ```sh
 python3 -m unittest discover -s tests -v
 python3 scripts/smoke_test.py
 ```
 
-The smoke test uses a temporary database and free loopback ports; it does not touch a running demo. It exercises JSON/CSV imports, rollback, read-only reporting, HTTP action guards, workbench preview/apply/reset and the entire six-click story.
+**64 tests pass**, plus the CLI/HTTP smoke checks. Tests cover actual transactions and injected failures, duplicate replay, update conflicts, SQL queries, unknown schema refusal, non-mock inputs, export/reimport, a fresh database CLI workflow and the separate story. The smoke script uses temporary files and OS-assigned loopback ports.
 
-## Troubleshooting
+- [Importer guide](docs/IMPORTER.md): commands, Python calls, errors and worked example.
+- [Data contract](docs/DATA_CONTRACT.md): normalization, validation and provenance.
+- [Schema guide](docs/SCHEMA.md): tables, SQL queries and version policy.
+- [Developer guide](docs/DEVELOPMENT.md): module map and demo HTTP interface.
+- [Test evidence](docs/TEST_RESULTS.md) and [limitations](docs/LIMITATIONS.md).
 
-- **URL does not open:** start the launcher again and use its newly printed URL on the same computer. A closed terminal means the foreground server stopped.
-- **Python command missing:** install Python 3.11 or newer; on Windows try `py -3 --version`.
-- **Port occupied:** omit `--port` to let the OS choose. Never stop another application's server to run this demo.
-- **Stale revision after another tab changed the story:** reload the page to obtain the current state, or restart the story.
-- **Database from earlier experiments:** use a fresh checkout or another database path for CLI work. Do not point the demo at an operational database.
+## Boundaries and reuse
 
-## Author and reuse
+This is a small local utility with a narrow snapshot contract, not a general ETL framework or production agent platform. There are no live integrations, credential handling, authentication, managed backups, background jobs, historical queries or production deployment hardening. Use a dedicated database, follow your data-handling requirements and do not expose the demo server to a network.
 
-Vladimir Stojanovski · [The Sovereign AI](https://thesovereignai.substack.com) · [LinkedIn](https://www.linkedin.com/in/vlads/)
+Vladimir Stojanovski · [The Sovereign AI](https://thesovereignai.substack.com) · [LinkedIn](https://www.linkedin.com/in/vlads/).
 
-Prepared with AI assistance and executable checks. No employer materials, operational databases or credentials are included. No open-source license has been selected for this initial source publication; see [NOTICE](NOTICE.md). Public visibility should not be described as an open-source license grant.
+Prepared with AI assistance and executable checks. Published files and examples contain no operational data. No open-source license has been selected; [NOTICE.md](NOTICE.md) describes the current publication terms. Technical reusability is not a license grant.

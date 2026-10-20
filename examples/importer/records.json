@@ -1,0 +1,32 @@
+[
+  {
+    "source": "editorial_tracker",
+    "external_id": "ART-101",
+    "title": "Synthetic guide to procurement approvals",
+    "workstream": "Research",
+    "status": "drafted",
+    "source_date": "2026-10-18T09:00:00Z",
+    "source_updated_at": "2026-10-19T09:00:00Z",
+    "scheduled_for": null,
+    "submitted_at": null,
+    "verified_at": null,
+    "evidence_url": null,
+    "metric_value": null,
+    "metric_unit": null
+  },
+  {
+    "source": "newsletter_export",
+    "external_id": "ISSUE-42",
+    "title": "Synthetic October newsletter",
+    "workstream": "Publishing",
+    "status": "verified",
+    "source_date": "2026-10-10T09:00:00Z",
+    "source_updated_at": "2026-10-19T10:00:00Z",
+    "scheduled_for": null,
+    "submitted_at": "2026-10-09T09:00:00Z",
+    "verified_at": "2026-10-09T10:00:00Z",
+    "evidence_url": "https://example.org/evidence/issue-42",
+    "metric_value": 0,
+    "metric_unit": "clicks"
+  }
+]

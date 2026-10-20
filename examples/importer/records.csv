@@ -1,0 +1,3 @@
+source,external_id,title,workstream,status,source_date,source_updated_at,scheduled_for,submitted_at,verified_at,evidence_url,metric_value,metric_unit
+editorial_tracker,ART-101,Synthetic guide to procurement approvals,Research,drafted,2026-10-18T09:00:00Z,2026-10-19T09:00:00Z,,,,,,
+newsletter_export,ISSUE-42,Synthetic October newsletter,Publishing,verified,2026-10-10T09:00:00Z,2026-10-19T10:00:00Z,,2026-10-09T09:00:00Z,2026-10-09T10:00:00Z,https://example.org/evidence/issue-42,0,clicks

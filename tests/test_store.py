@@ -112,7 +112,7 @@ class StoreTests(unittest.TestCase):
         self.assertEqual(validate(row, AS_OF)["source_updated_at"], "2026-10-19T10:00:00Z")
 
     def test_reject_invalid_fields_and_dates(self):
-        for changes in ({"source": "notion"}, {"status": "published"}, {"surprise": 1},
+        for changes in ({"source": "invalid source"}, {"status": "published"}, {"surprise": 1},
                         {"title": " "}, {"source_date": "yesterday"},
                         {"source_updated_at": "2026-10-19T10:00:00"},
                         {"source_updated_at": "2026-10-20T10:00:00Z"},
@@ -124,14 +124,14 @@ class StoreTests(unittest.TestCase):
         for metric in (-1, float("nan"), float("inf"), True, "12"):
             with self.subTest(metric=metric), self.assertRaises(ValidationError):
                 validate(dict(self.rows[0], metric_value=metric, metric_unit="views"), AS_OF)
-        for changes in ({"metric_unit": "views"}, {"metric_value": 1}, {"metric_unit": "dollars", "metric_value": 1}):
+        for changes in ({"metric_unit": "views"}, {"metric_value": 1}, {"metric_unit": "invalid unit", "metric_value": 1}):
             with self.assertRaises(ValidationError):
                 validate(dict(self.rows[0], **changes), AS_OF)
 
     def test_status_evidence_requirements(self):
         cases = [dict(self.rows[2], scheduled_for=None), dict(self.rows[3], submitted_at=None),
                  dict(self.rows[4], evidence_url=None), dict(self.rows[4], verified_at=None),
-                 dict(self.rows[4], evidence_url="https://real.example/evidence"),
+                 dict(self.rows[4], evidence_url="http://example.org/evidence"),
                  dict(self.rows[4], verified_at="2026-10-19T07:00:00Z"),
                  dict(self.rows[0], submitted_at="2026-10-19T08:00:00Z"),
                  dict(self.rows[3], verified_at="2026-10-19T09:00:00Z")]
