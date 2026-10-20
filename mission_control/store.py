@@ -35,7 +35,10 @@ def timestamp(value):
         raise ValidationError("Invalid ISO 8601 timestamp") from exc
     if parsed.tzinfo is None:
         raise ValidationError("Timestamp must include timezone")
-    return parsed.astimezone(timezone.utc)
+    try:
+        return parsed.astimezone(timezone.utc)
+    except (OverflowError, ValueError) as exc:
+        raise ValidationError("Timestamp is outside the supported UTC range") from exc
 
 
 def iso(value):
@@ -90,8 +93,13 @@ def validate(row, as_of):
         if not valid_url:
             raise ValidationError("evidence_url: absolute HTTPS URL without embedded credentials required")
     metric = result["metric_value"]
-    if metric is not None and (isinstance(metric, bool) or not isinstance(metric, (int, float)) or not math.isfinite(metric) or metric < 0):
-        raise ValidationError("metric_value must be a finite nonnegative number or null")
+    if metric is not None:
+        try:
+            valid_metric = not isinstance(metric, bool) and isinstance(metric, (int, float)) and math.isfinite(metric) and metric >= 0
+        except OverflowError:
+            valid_metric = False
+        if not valid_metric:
+            raise ValidationError("metric_value must be a finite nonnegative number or null")
     unit = result["metric_unit"]
     if unit is not None and (not isinstance(unit, str) or not UNIT_PATTERN.fullmatch(unit)):
         raise ValidationError("metric_unit: lowercase unit slug, 1–32 characters, or null")

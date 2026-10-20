@@ -4,7 +4,7 @@ Import JSON or CSV exports into SQLite, reject inconsistent batches, skip duplic
 
 For example, you receive a daily export from an editorial tracker or reporting tool. Normalize it to the documented contract, import it, and query the latest records without double-counting a replay or treating a new import as fresh evidence. The importer does not collect data from those services; you supply the files.
 
-**Standard library only.** Python 3.11+ with SQLite JSON support (normally bundled), no pip packages or account setup. Verified on Python 3.14/macOS; other environments are not yet tested.
+**Standard library only.** Python 3.11+ with SQLite JSON support (normally bundled), no pip packages or account setup. Hosted checks cover Python 3.11–3.14 on Ubuntu, macOS and Windows; see [CI results](https://github.com/vladprosper/mission-control-demo/actions/workflows/ci.yml).
 
 ## Start with the importer
 
@@ -119,7 +119,7 @@ python3 -m unittest discover -s tests -v
 python3 scripts/smoke_test.py
 ```
 
-**64 tests pass**, plus the CLI/HTTP smoke checks. Tests cover actual transactions and injected failures, duplicate replay, update conflicts, SQL queries, unknown schema refusal, non-mock inputs, export/reimport, a fresh database CLI workflow and the separate story. The smoke script uses temporary files and OS-assigned loopback ports.
+**65 tests pass**, plus the CLI/HTTP smoke checks. Tests cover actual transactions and injected failures, duplicate replay, update conflicts, SQL queries, unknown schema refusal, non-mock inputs, export/reimport, a fresh database CLI workflow and the separate story. The smoke script uses temporary files and OS-assigned loopback ports.
 
 - [Importer guide](docs/IMPORTER.md): commands, Python calls, errors and worked example.
 - [Data contract](docs/DATA_CONTRACT.md): normalization, validation and provenance.

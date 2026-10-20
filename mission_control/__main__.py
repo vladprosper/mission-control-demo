@@ -52,7 +52,7 @@ def main():
         else:
             # Reject malformed input before even creating a new database file.
             rows = load_file(args.file) if args.command == "import" else None
-            if rows is not None:
+            if args.command == "import":
                 prepare_batch(rows, as_of)
             with closing(connect(args.db)) as db:
                 initialize(db, fictional=args.fictional)

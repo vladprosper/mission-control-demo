@@ -1,6 +1,6 @@
 # Snapshot import contract
 
-The importer accepts user-supplied local snapshots; every bundled example is fictional. `synthetic.json` and `synthetic.csv` represent the same 12 records. Blank CSV cells map to `null`; JSON uses `null` explicitly. Unknown keys, malformed CSV widths, and duplicate CSV headers are rejected. Inputs are limited to 5 MB and batches to 10,000 nonempty object records.
+The importer accepts user-supplied local snapshots; every bundled example is fictional. `synthetic.json` and `synthetic.csv` represent the same 12 records. Blank CSV cells map to `null`; JSON uses `null` explicitly. Unknown keys, duplicate JSON fields, malformed CSV quoting or widths, and duplicate CSV headers are rejected. Inputs are limited to 5 MB and batches to 10,000 nonempty object records.
 
 | Field | Meaning and validation |
 | --- | --- |
@@ -16,7 +16,7 @@ The importer accepts user-supplied local snapshots; every bundled example is fic
 | `evidence_url` | Required only for verified; absolute HTTPS URL with hostname, no embedded credentials or whitespace, at most 2,048 characters. It is never fetched; its existence and contents are not verified. |
 | `metric_value`, `metric_unit` | Both absent/null or both present. Finite nonnegative numeric value (bools rejected); unit matches `[a-z][a-z0-9_/-]{0,31}` (for example clicks/items/hours). Zero is valid. |
 
-All timestamp values normalize to UTC. Source observation, submission, and verification timestamps cannot follow `source_updated_at`. Required strings are trimmed. Numeric values normalize to float so `3` and `3.0` deduplicate equally across CSV and JSON.
+All timestamp values normalize to UTC. Source observation, submission, and verification timestamps cannot follow `source_updated_at`. Required strings are trimmed. Numeric values normalize to float so `3` and `3.0` deduplicate equally across CSV and JSON. Values outside the finite float range are rejected; representable values may round. This field is not suitable for exact decimal accounting or large integer identifiers.
 
 | Status | Demo meaning | Does not establish |
 | --- | --- | --- |

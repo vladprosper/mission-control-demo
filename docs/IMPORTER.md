@@ -45,6 +45,14 @@ The successful calls add three import-summary rows. The rejected call adds none.
 
 For example, at `2026-10-19T12:00:00Z`, the fixture's observed zero clicks remains `0`; its missing metric remains `null`. A report with a seven-day threshold flags the old observation as stale. Reimporting that observation today does not make its source date newer.
 
+For example, after importing `newer.json`, importing `records.json` again tries to replace the scheduled ART-101 with its older draft. This command exits 2 with `Changed records require a strictly newer source_updated_at`; both records and successful-import summaries remain unchanged:
+
+```sh
+python3 -m mission_control --db output/tutorial.sqlite3 --as-of 2026-10-19T12:00:00Z import examples/importer/records.json
+```
+
+An exporter must supply the current snapshot or repeat the unchanged latest record. This store does not automatically merge fields from old and new exports.
+
 ## Python calls
 
 Import from `mission_control` while running from the repository root:
@@ -84,3 +92,9 @@ The query does not conflate unknown metrics with observed zero. For totals, grou
 | DB not found on report/export | Check the path; read-only commands never create an empty database. |
 
 Export preserves normalized source fields, not import timestamps or historical import-summary rows. Importing an export into a new database creates new local import provenance.
+
+## When this contract fits
+
+Use it when each source supplies a stable record ID, a trustworthy update time and a snapshot that maps to the five statuses. For example, two exports containing `editorial_tracker/ART-101` can be reconciled by timestamp without creating a second article. A different ID creates a different record even if its title matches.
+
+It is a poor fit for event streams, exact-decimal financial records, arbitrary nested documents, or sources without reliable IDs/update times. There is no deletion/tombstone field: a record missing from the next file remains in SQLite. Imports replace complete snapshots, so omitted optional fields become null rather than retaining their previous values. Reports load the current records into memory and have no paging. These are limits of the current utility, not hidden configuration options.

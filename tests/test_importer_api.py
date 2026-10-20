@@ -114,6 +114,32 @@ class ImporterAPITests(unittest.TestCase):
 
 
 class ImporterCLITests(unittest.TestCase):
+    def test_malformed_files_reject_before_database_creation(self):
+        row = load_file(ROOT / "examples/importer/records.json")[0]
+        cases = {
+            "null.json": "null",
+            "duplicates.json": json.dumps([row]).replace('"drafted"', '"drafted", "status": "planned"'),
+            "quote.csv": 'source,external_id,title,workstream,status,source_updated_at\neditorial_tracker,A,"unfinished',
+            "header.csv": '"unfinished',
+            "huge.json": json.dumps([dict(row, metric_value=10**400, metric_unit="clicks")]),
+            "time.json": json.dumps([dict(row, source_updated_at="0001-01-01T00:00:00+23:00")]),
+        }
+        with tempfile.TemporaryDirectory() as tmp:
+            for filename, content in cases.items():
+                with self.subTest(filename=filename):
+                    path = Path(tmp) / filename
+                    path.write_text(content, encoding="utf-8")
+                    db = Path(tmp) / (filename + ".sqlite3")
+                    for command in ("validate", "import"):
+                        result = subprocess.run(
+                            [sys.executable, "-m", "mission_control", "--db", str(db),
+                             "--as-of", "2026-10-19T12:00:00Z", command, str(path)],
+                            cwd=ROOT, capture_output=True, text=True)
+                        self.assertEqual(result.returncode, 2, result.stderr)
+                        self.assertIn("Importer error:", result.stderr)
+                        self.assertNotIn("Traceback", result.stderr)
+                        self.assertFalse(db.exists())
+
     def test_documented_clean_workflow_and_export_round_trip(self):
         with tempfile.TemporaryDirectory() as tmp:
             db = Path(tmp) / "fresh.sqlite3"

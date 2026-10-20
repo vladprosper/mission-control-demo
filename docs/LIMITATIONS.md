@@ -1,4 +1,4 @@
-# What this demonstration does and does not establish
+# Utility and demonstration limits
 
 ## Real implementation
 
@@ -14,7 +14,7 @@ Story state, technical reporting and the preview workbench are distinct stores. 
 
 ## Data limits
 
-Identity is exact `(source, external_id)`, not semantic matching. Deduplication hashes are not signatures. Latest snapshots and successful import summaries are retained, not a full event history or durable failed-import audit. Statuses are structurally checked source assertions; a newer correction can regress status. Freshness is a fixed demonstration threshold. Unknown metrics stay unknown and unlike units are not summed.
+Identity is exact `(source, external_id)`, not semantic matching. Deduplication hashes are not signatures. Latest snapshots and successful import summaries are retained, not a full event history or durable failed-import audit. Statuses are structurally checked source assertions; a newer correction can regress status. Importer freshness is configurable; the browser demonstration uses a seven-day threshold. Unknown metrics stay unknown and unlike units are not summed. Metrics normalize to binary floating point: this is not an exact-decimal ledger, and large integers may lose precision. Use a separate exact-value contract for money or identifiers.
 
 ## Deployment limits
 
